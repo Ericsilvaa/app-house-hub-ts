@@ -2,13 +2,15 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import ThemeProvider from './components/ThemeProvider';
 import { PATHS } from './constants/paths';
-import ProductDetails from './pages/Details';
+import ProductFavoritesPage from './pages/Favorite';
 import HomePage from './pages/Home';
 import NotFoundPage from './pages/NotFound';
+import { store } from './store/store';
 
 // seedLocalDatabase();
 
@@ -23,8 +25,8 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: PATHS.PRODUCT_ID,
-        element: <ProductDetails />,
+        path: PATHS.FAVORITES,
+        element: <ProductFavoritesPage />,
       },
     ],
   },
@@ -33,7 +35,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
 );
