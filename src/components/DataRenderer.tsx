@@ -1,19 +1,25 @@
+import { Spinner } from './ui/Spinner';
+
 type Props = {
-  children: React.ReactNode
-  error: string | null
-  isLoading: boolean
-}
+  children: React.ReactNode;
+  error: string | null;
+  isLoading: boolean;
+};
 
 const DataRenderer = ({ children, error, isLoading }: Props) => {
   if (isLoading) {
-    return <div className='flex justify-center'>loading...</div>
+    return (
+      <div className='flex justify-center'>
+        <Spinner size='xs' />
+      </div>
+    );
   }
 
   if (error) {
-    return <div className='text-center'>{error}</div>
+    return <div className='text-center'>{error}</div>;
   }
 
-  return children
-}
+  return children;
+};
 
-export default DataRenderer
+export default DataRenderer;
