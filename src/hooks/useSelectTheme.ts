@@ -1,28 +1,28 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 
 // Define a type for Theme, which can be 'dark', 'light', or 'system'
-type Theme = "dark" | "light" | "system"
+type Theme = 'dark' | 'light' | 'system'
 
 // The useTheme custom hook for managing the theme
 const useTheme = (
-  defaultTheme: Theme = "system",
-  storageKey: string = "vite-ui-theme",
+  defaultTheme: Theme = 'system',
+  storageKey: string = 'vite-ui-theme'
 ) => {
   // useState to hold the current theme state. It initializes the state based on the user's saved preference in localStorage, or defaults to the provided defaultTheme
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   )
 
   // useEffect hook to apply changes whenever the theme state changes
   useEffect(() => {
     const root = window.document.documentElement // Access the root element of the document
-    root.classList.remove("light", "dark") // Remove any existing theme classes
+    root.classList.remove('light', 'dark') // Remove any existing theme classes
     let effectiveTheme = theme // Initialize effectiveTheme variable with the current theme
     // If the current theme is 'system', determine the effective theme based on the system's preference
-    if (theme === "system") {
-      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
+    if (theme === 'system') {
+      effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
     }
 
     // Add the effective theme class to the root element

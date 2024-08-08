@@ -1,30 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 type Product = {
-  products: any[];
-  favoriteProductsIds: string[];
-  error: string | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-};
+  products: any[]
+  favoriteProductsIds: string[]
+  error: string | null
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+}
 
 const initialState = {
   products: [],
   error: null,
   favoriteProductsIds: [],
-  status: 'idle',
-};
+  status: 'idle'
+}
 
-export const productsSlice = createSlice({
+const productsSlice = createSlice({
   name: 'products',
   initialState: initialState as Product,
   reducers: {
     addFavoriteListing: (state, action) => {
-      state.favoriteProductsIds.push(action.payload);
+      state.favoriteProductsIds.push(action.payload)
     },
     removeFavoriteListing: (state, action) => {
       state.favoriteProductsIds = state.favoriteProductsIds.filter(
-        (id) => id !== action.payload,
-      );
-    },
-  },
-});
+        (id) => id !== action.payload
+      )
+    }
+  }
+})
+
+export const { addFavoriteListing, removeFavoriteListing } =
+  productsSlice.actions
+
+export default productsSlice.reducer

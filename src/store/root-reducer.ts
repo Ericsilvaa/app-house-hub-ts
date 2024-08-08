@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
 // Import your reducers here
-// import { exampleReducer } from './example-reducer';
+import { combineReducers } from 'redux'
+import productsReducer from './slices/products/slice'
 
 const rootReducer = combineReducers({
   // Add your reducers here
-  // example: exampleReducer,
-});
+  products: productsReducer
+})
 
-export default rootReducer;
+export default rootReducer
