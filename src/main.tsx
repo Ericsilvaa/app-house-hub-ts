@@ -1,14 +1,39 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./App.tsx"
-import "./index.css"
+import './index.css';
 
-import { BrowserRouter as Router } from "react-router-dom"
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App';
+import ThemeProvider from './components/ThemeProvider';
+import { PATHS } from './constants/paths';
+import ProductDetails from './pages/Details';
+import HomePage from './pages/Home';
+import NotFoundPage from './pages/NotFound';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+// seedLocalDatabase();
+
+const router = createBrowserRouter([
+  {
+    path: PATHS.HOME,
+    element: <App />,
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: PATHS.HOME,
+        element: <HomePage />,
+      },
+      {
+        path: PATHS.PRODUCT_ID,
+        element: <ProductDetails />,
+      },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>
-)
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </React.StrictMode>,
+);
