@@ -2,16 +2,15 @@ import DataRenderer from '@/components/DataRenderer';
 import ProductFilters from '@/components/ProductFilters';
 import ProductList from '@/components/ProductList';
 import { Separator } from '@/components/ui/separator';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { addProducts } from '@/store/slices/products/slice';
 import { env } from '@/utils/env';
 import { getItem } from '@/utils/localStorage';
 import React from 'react';
 
 const HomePage = () => {
-  // const { data, error, isLoading } = useFetch('/api/listings');
-
-  const [data, setData] = React.useState<any[]>([]);
-  const [error, setError] = React.useState<any>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { error, products, status } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
 
   const [filters, setFilters] = React.useState({
     dates: undefined,
@@ -23,11 +22,18 @@ const HomePage = () => {
     setFilters(filters);
   }, []);
 
+  // const { data, error, isLoading } = useFetch('/api/listings');
+
   const fetchOptions = React.useMemo(() => ({ params: filters }), [filters]);
 
   React.useEffect(() => {
     const data = getItem(env.DB_KEY!);
-    setData(data?.listings);
+
+    const dispatchAbort = dispatch(addProducts(data?.listings));
+
+    return () => {
+      // dispatchAbort.abort();
+    };
   }, [filters]);
 
   return (
@@ -36,8 +42,8 @@ const HomePage = () => {
         <ProductFilters onChange={handleFilters} />
         <Separator className='my-4' />
       </div>
-      <DataRenderer error={error} isLoading={isLoading}>
-        <ProductList products={[...data]} />
+      <DataRenderer error={error} isLoading={status === 'loading'}>
+        <ProductList products={[...products]} />
       </DataRenderer>
     </div>
   );
