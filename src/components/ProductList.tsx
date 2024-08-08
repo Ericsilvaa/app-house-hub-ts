@@ -20,7 +20,7 @@ const ProductList = ({ products }: Props) => {
           return <ProductCard key={product.id} product={product} />;
         })
       ) : (
-        <p>No listings found.</p>
+        <p>Nenhum produto encontrado</p>
       )}
     </div>
   );

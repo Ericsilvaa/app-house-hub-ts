@@ -1,21 +1,20 @@
-import React from 'react'
+import React from 'react';
 
-import { getImageUrl } from '@/utils/images'
+import { getImageUrl } from '@/utils/images';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
-} from '../ui/carousel'
+  CarouselPrevious,
+} from '../ui/carousel';
 
 type Props = {
-  product: any
-}
+  product: any;
+};
 
 const ProductDetailsCardImages = ({ product }: Props) => {
-  console.log('🚀 ~ product:', product)
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   return (
     <>
       <img
@@ -44,7 +43,7 @@ const ProductDetailsCardImages = ({ product }: Props) => {
         <CarouselNext />
       </Carousel>
     </>
-  )
-}
+  );
+};
 
-export default ProductDetailsCardImages
+export default ProductDetailsCardImages;
