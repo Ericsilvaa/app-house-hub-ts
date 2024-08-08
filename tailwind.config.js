@@ -3,11 +3,11 @@ import tailwindCssAnimatePlugin from 'tailwindcss-animate';
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  content: ['./src/**/*.{js,jsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'], // Inclui arquivos .ts e .tsx
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: '10rem',
       screens: {
         '2xl': '1400px',
       },

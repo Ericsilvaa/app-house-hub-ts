@@ -2,12 +2,16 @@
 const config = {
   bracketSpacing: true,
   jsxSingleQuote: true,
+  endOfLine: 'auto',
+  singleQuote: true,
+  semi: false,
+  bracketSpacing: true,
+  jsxSingleQuote: true,
   plugins: ['prettier-plugin-tailwindcss'],
   printWidth: 80,
-  quoteProps: 'consistent',
   singleQuote: true,
   tabWidth: 2,
-  trailingComma: 'all',
+  trailingComma: 'none',
 };
 
 module.exports = config;
