@@ -1,10 +1,11 @@
 // Import your reducers here
-import { combineReducers } from 'redux'
-import productsReducer from './slices/products/slice'
+import { combineReducers } from 'redux';
+import userReducer from './slices/auth/userSlice';
+import productsReducer from './slices/products/slice';
 
 const rootReducer = combineReducers({
-  // Add your reducers here
-  products: productsReducer
-})
+  products: productsReducer,
+  user: userReducer,
+});
 
-export default rootReducer
+export default rootReducer;

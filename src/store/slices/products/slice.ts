@@ -1,35 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit'
+import api from '@/api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 type Product = {
-  products: any[]
-  favoriteProductsIds: string[]
-  error: string | null
-  status: 'idle' | 'loading' | 'succeeded' | 'failed'
-}
+  products: any[];
+  error: string | null;
+  status: StatusType;
+};
 
-const initialState = {
+const initialState: Product = {
   products: [],
   error: null,
-  favoriteProductsIds: [],
-  status: 'idle'
-}
+  status: 'idle',
+};
 
 const productsSlice = createSlice({
   name: 'products',
-  initialState: initialState as Product,
+  initialState,
   reducers: {
-    addFavoriteListing: (state, action) => {
-      state.favoriteProductsIds.push(action.payload)
+    // add products
+    addProducts(state, action) {
+      if (state.products.length === 0) {
+        state.products = action.payload;
+        return;
+      }
     },
-    removeFavoriteListing: (state, action) => {
-      state.favoriteProductsIds = state.favoriteProductsIds.filter(
-        (id) => id !== action.payload
-      )
-    }
-  }
-})
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        if (axios.isCancel(action.payload)) {
+          return;
+        }
 
-export const { addFavoriteListing, removeFavoriteListing } =
-  productsSlice.actions
+        state.status = 'failed';
+        state.error = action.error.message || null;
+      });
+  },
+});
 
-export default productsSlice.reducer
+export const fetchProducts = createAsyncThunk(
+  'products/fetchProducts',
+  async (options: any) => {
+    const response = await api.get('/products', options);
+    return response.data;
+  },
+);
+
+export const { addProducts } = productsSlice.actions;
+
+export default productsSlice.reducer;
